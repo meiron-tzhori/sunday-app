@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: groceries-api
+  namespace: ep-test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: groceries-api
+  template:
+    metadata:
+      labels:
+        app: groceries-api
+    spec:
+      containers:
+        - name: groceries-api
+          image: groceries-api:0.6
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+          env:
+            - name: DB_PATH
+              value: /data/store.db
+          volumeMounts:
+            - name: data
+              mountPath: /data
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: groceries-pvc

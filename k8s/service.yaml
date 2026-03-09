@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: groceries-api-svc
+  namespace: ep-test
+spec:
+  selector:
+    app: groceries-api
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8080
